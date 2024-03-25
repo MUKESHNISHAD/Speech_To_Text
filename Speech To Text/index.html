@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Recognition</title>
+     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+     <link rel="stylesheet" href="path/to/telwin.css">
+    <style>
+         body {
+            background-color: #333;  
+            color: #fff; 
+            font-family: Arial, sans-serif; 
+            padding-top: 50px; 
+        }
+        .container {
+            margin-top: 20px; 
+        }
+        .form-control {
+            background-color: #444; 
+            color: #fff; 
+        }
+        .btn-primary {
+            background-color: #007bff;  
+            border-color: #007bff;
+        }
+        .btn-danger {
+            background-color: #dc3545;  
+            border-color: #dc3545;  
+        }
+        .btn-primary:hover, .btn-primary:focus {
+            background-color: #0056b3;  
+            border-color: #0056b3;  
+        }
+        .btn-danger:hover, .btn-danger:focus {
+            background-color: #c82333;  
+            border-color: #bd2130;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center mb-4">Voice Recognition</h2>
+                <div class="form-group">
+                    <textarea class="form-control" id="output" cols="50" rows="10" placeholder="Transcribed text will appear here..."></textarea>
+                </div>
+                <div class="text-center">
+                    <button id="start-btn" class="btn btn-primary mr-3">Start</button>
+                    <button id="End-btn" class="btn btn-danger">End</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        const reco = new webkitSpeechRecognition();
+        reco.lang = 'en-US';
+        reco.interimResults = true;
+        reco.continue = true;
+        document.getElementById("start-btn").onclick = () => reco.start();
+        document.getElementById("End-btn").onclick = () => reco.stop();
+        reco.onresult = event => {
+            document.getElementById("output").value = event.results[event.results.length - 1][0].transcript;
+        }
+        navigator.mediaDevices.getUserMedia({audio:true});
+    </script>
+</body>
+</html>
